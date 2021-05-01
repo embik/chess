@@ -17,6 +17,7 @@ defmodule Chess.Game.Server do
     {:ok, Game.State.new()}
   end
 
+  @impl true
   def handle_call(:get_id, _from, state) do
     {:reply, state.id, state}
   end

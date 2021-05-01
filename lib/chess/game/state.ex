@@ -6,6 +6,6 @@ defmodule Chess.Game.State do
   defstruct id: "", player1: %Player{}, player2: %Player{}, board: %Board{}
 
   def new() do
-    %State{id: Ecto.UUID.generate()}
+    %State{id: Ecto.UUID.generate(), board: Board.new()}
   end
 end

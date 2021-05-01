@@ -3,7 +3,7 @@ use Mix.Config
 # Configure your database
 config :chess, Chess.Repo,
   username: "postgres",
-  password: "postgres",
+  password: "chess",
   database: "chess_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,

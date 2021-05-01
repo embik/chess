@@ -18,7 +18,9 @@ defmodule Chess.Application do
       # Start the Prometheus exporter
       {TelemetryMetricsPrometheus, [metrics: metrics()]},
       # Start the Endpoint (http/https)
-      ChessWeb.Endpoint
+      ChessWeb.Endpoint,
+      # Start the GameSupervisor
+      Chess.GameSupervisor
       # Start a worker by calling: Chess.Worker.start_link(arg)
       # {Chess.Worker, arg}
     ]

@@ -5,6 +5,8 @@ defmodule Chess.Application do
 
   use Application
 
+  alias Telemetry.Metrics
+
   def start(_type, _args) do
     children = [
       # Start the Ecto repository
@@ -13,6 +15,8 @@ defmodule Chess.Application do
       ChessWeb.Telemetry,
       # Start the PubSub system
       {Phoenix.PubSub, name: Chess.PubSub},
+      # Start the Prometheus exporter
+      {TelemetryMetricsPrometheus, [metrics: metrics()]},
       # Start the Endpoint (http/https)
       ChessWeb.Endpoint
       # Start a worker by calling: Chess.Worker.start_link(arg)
@@ -31,4 +35,9 @@ defmodule Chess.Application do
     ChessWeb.Endpoint.config_change(changed, removed)
     :ok
   end
+
+  defp metrics, do:
+    [
+      Metrics.sum("vm.memory.total")
+    ]
 end

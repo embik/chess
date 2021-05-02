@@ -11,6 +11,14 @@ defmodule Chess.Game.Server do
     GenServer.call(server, :get_id)
   end
 
+  def get_board(server) do
+    GenServer.call(server, :get_board)
+  end
+
+  def get_state(server) do
+    GenServer.call(server, :get_state)
+  end
+
 
   @impl true
   def init(init_args) do
@@ -20,5 +28,15 @@ defmodule Chess.Game.Server do
   @impl true
   def handle_call(:get_id, _from, state) do
     {:reply, state.id, state}
+  end
+
+  @impl true
+  def handle_call(:get_board, _from, state) do
+    {:reply, state.board, state}
+  end
+
+  @impl true
+  def handle_call(:get_state, _from, state) do
+    {:reply, state, state}
   end
 end

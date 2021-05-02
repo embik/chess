@@ -7,10 +7,6 @@ defmodule ChessWeb.GameController do
 
   def new(conn, _params) do
     game_id = Chess.GameRegistry.create()
-    redirect(conn, to: Routes.game_path(Endpoint, :show, game_id))
-  end
-
-  def show(conn, %{"id" => id}) do
-    render(conn, "game.html")
+    redirect(conn, to: Routes.live_path(Endpoint, ChessWeb.GameLive, game_id))
   end
 end

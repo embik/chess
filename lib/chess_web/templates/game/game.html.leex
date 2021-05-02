@@ -1,0 +1,11 @@
+<h3>Game ID: <%= @game.id %></h3>
+
+<table>
+  <%= for x <- 1..8 do %>
+    <tr>
+<%= for y <- 1..8 do %>
+  <td><%= Map.get(@game.board.field, {x,y}) %></td>
+<% end %>
+    </tr>
+  <% end %>
+</table>

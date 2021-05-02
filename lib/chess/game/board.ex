@@ -7,7 +7,7 @@ defmodule Chess.Game.Board do
     coordinates = for x <- 1..8, y <- 1..8, do: {x, y}
 
     field = Enum.reduce coordinates, %{}, fn x, acc ->
-      Map.put(acc, x, nil)
+      Map.put(acc, x, 0)
     end
 
     %Board{field: field}

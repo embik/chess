@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Chess · Phoenix Framework</title>
     <%= csrf_meta_tag() %>
-    <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
-    <script phx-track-static defer type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
+    <link phx-track-static rel="stylesheet" href="<%= Routes.static_path(@socket, "/css/app.css") %>"/>
+    <script phx-track-static defer type="text/javascript" src="<%= Routes.static_path(@socket, "/js/app.js") %>"></script>
   </head>
   <body>
     <header>
@@ -15,16 +15,16 @@
         <nav role="navigation">
           <ul>
             <%= if function_exported?(Routes, :live_dashboard_path, 2) do %>
-              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@conn, :home) %></li>
+              <li><%= link "LiveDashboard", to: Routes.live_dashboard_path(@socket, :home) %></li>
             <% end %>
           </ul>
         </nav>
-        <a href="<%= Routes.page_path(@conn, :index) %>">Chess</a>
+        <a href="<%= Routes.page_path(@socket, :index) %>">Chess</a>
       </section>
     </header>
     <main role="main" class="container">
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+      <p class="alert alert-info" role="alert"><%= get_flash(@socket, :info) %></p>
+      <p class="alert alert-danger" role="alert"><%= get_flash(@socket, :error) %></p>
       <%= @inner_content %>
     </main>
   </body>

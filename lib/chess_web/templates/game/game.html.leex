@@ -1,11 +1,25 @@
 <h3>Game ID: <%= @game.id %></h3>
 
-<table>
-  <%= for x <- 1..8 do %>
+<table class="chess-board">
+  <thead>
+    <th></th>
+  <%= for y <- 1..8 do %>
+    <th><%= char(y) %></th>
+  <% end %>
+  </thead>
+  <%= for x <- 8..1 do %>
     <tr>
-<%= for y <- 1..8 do %>
-  <td><%= Map.get(@game.board.field, {x,y}) %></td>
-<% end %>
+      <th><%= x %></th>
+      <%= for y <- 1..8 do %>
+        <td class="<%= color(x, y) %>"><%= get_piece(@game.board.field, x, y) %></td>
+      <% end %>
+      <th><%= x %></th>
     </tr>
   <% end %>
+  <thead>
+    <th></th>
+  <%= for y <- 1..8 do %>
+    <th><%= char(y) %></th>
+  <% end %>
+  </thead>
 </table>

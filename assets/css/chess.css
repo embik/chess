@@ -12,19 +12,20 @@
 
 .chess-board th {
     border-bottom: 0px;
+    color: #999;
 }
 
 .chess-board tr td {
-    border: 1px solid #888;
+    border: 1px solid #777;
     font-size: 25px;
 }
 
 .white {
-    background: #AAA;
+    background: #BBB;
 }
 
 .black {
-    background: #888;
+    background: #777;
 }
 
 .piece-white {

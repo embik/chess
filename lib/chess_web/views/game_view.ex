@@ -18,7 +18,7 @@ defmodule ChessWeb.GameView do
       true -> nil
       false ->
         case Map.has_key?(piece, :class) do
-          true -> Atom.to_string(piece.class) <> "-" <> Atom.to_string(piece.color)
+          true -> "fa-chess-" <> Atom.to_string(piece.class) <> " piece-" <> Atom.to_string(piece.color)
           false -> nil
         end
     end

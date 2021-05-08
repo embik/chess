@@ -15,15 +15,22 @@
 }
 
 .chess-board tr td {
-    border: 1px solid black;
+    border: 1px solid #888;
+    font-size: 25px;
 }
 
 .white {
-    background: white;
-    color: black;
+    background: #AAA;
 }
 
 .black {
-    background: black;
-    color: white;
+    background: #888;
+}
+
+.piece-white {
+    color: #FFF;
+}
+
+.piece-black {
+    color: #111;
 }

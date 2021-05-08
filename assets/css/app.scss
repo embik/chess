@@ -2,6 +2,11 @@
 @import "./phoenix.css";
 @import "./chess.css";
 
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/regular";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+
 /* Alerts and form errors */
 .alert {
   padding: 15px;

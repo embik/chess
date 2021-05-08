@@ -11,7 +11,7 @@
     <tr>
       <th><%= x %></th>
       <%= for y <- 1..8 do %>
-        <td class="<%= color(x, y) %>"><%= get_piece(@game.board.field, x, y) %></td>
+        <td class="<%= color(x, y) %>"><i class="fas <%= get_piece(@game.board.field, x, y) %>"></i></td>
       <% end %>
       <th><%= x %></th>
     </tr>

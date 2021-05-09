@@ -12,7 +12,7 @@ Player: <%= @game.player1.selected_field.x %>
     <tr>
       <th><%= x %></th>
       <%= for y <- 1..8 do %>
-        <td phx-click="select_piece" phx-value-x="<%= x %>" phx-value-y="<%= y %>" class="<%= color(x, y) %> <%= is_selected?(@game.player1, x, y) %>"><i class="fas <%= get_piece(@game.board.field, x, y) %>"></i></td>
+        <td phx-click="select_piece" phx-value-x="<%= x %>" phx-value-y="<%= y %>" class="<%= color(x, y) %> <%= is_selected?(@game.player1, x, y) %> pointer"><i class="fas <%= get_piece(@game.board.field, x, y) %>"></i></td>
       <% end %>
       <th><%= x %></th>
     </tr>

@@ -24,6 +24,13 @@ defmodule ChessWeb.GameView do
     end
   end
 
+  def is_selected?(player, x, y) do
+    case player.selected_field.x == x and player.selected_field.y == y do
+      true -> "is-selected"
+      false -> nil
+    end
+  end
+
   defp blank?(nil), do: true
   defp blank?(_), do: false
 end

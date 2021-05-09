@@ -35,3 +35,7 @@
 .piece-black {
     color: #111;
 }
+
+.is-selected {
+    background: red;
+}

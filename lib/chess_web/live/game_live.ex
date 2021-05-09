@@ -8,6 +8,14 @@ defmodule ChessWeb.GameLive do
   def mount(%{"id" => id}, _, socket) do
     {_, pid} = Chess.GameRegistry.lookup(id)
     state = Chess.Game.Server.get_state(pid)
-    {:ok, assign(socket, game: state)}
+    {:ok, assign(socket, pid: pid, game: state)}
+  end
+
+  def handle_event("select_piece", %{"x" => x, "y" => y}, %{assigns: assigns} = socket) do
+    {x, _} = Integer.parse(x)
+    {y, _} = Integer.parse(y)
+    state = Chess.Game.Server.select_field(assigns.pid, :player1, x, y)
+
+    {:noreply, assign(socket, game: state)}
   end
 end

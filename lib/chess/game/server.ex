@@ -50,29 +50,26 @@ defmodule Chess.Game.Server do
         case state.player1.selected_field.x == x and state.player1.selected_field.y == y do
           true ->
             # selecting the same field as before will unselect it
-            player1 = %{state.player1 | selected_field: %{:x => 0, :y => 0}}
-            state = %{state | player1: player1}
-            {:reply, state, state}
+            state
+            |> set_selected_field(:white, 0, 0)
+            |> return_state
           false ->
             # player is selecting another piece
-            player1 = %{state.player1 | selected_field: %{:x => x, :y => y}}
-            state = %{state | player1: player1}
-            {:reply, state, state}
+            state
+            |> set_selected_field(:white, x, y)
+            |> return_state
         end
       false ->
         case state.player1.selected_field.x == 0 and state.player1.selected_field.y == 0 do
           true ->
             # selecting a non-valid field, do nothing
-            {:reply, state, state}
+            state
+            |> return_state
           false ->
             # player is making a move
-            field = get_piece(state.board.field, state.player1.selected_field.x, state.player1.selected_field.y)
-                    |> move_piece(state.board.field, x, y)
-
-            player1 = %{state.player1 | selected_field: %{:x => 0, :y => 0}}
-            board = %{state.board | field: field}
-            state = %{state | board: board, player1: player1}
-            {:reply, state, state}
+            state
+            |> move_piece(x, y)
+            |> return_state
         end
     end
   end
@@ -93,9 +90,38 @@ defmodule Chess.Game.Server do
     end
   end
 
-  defp move_piece({piece, start_x, start_y}, field, x, y) do
+  defp move_piece(state, x, y) do
+    field = get_piece(state.board.field, state.player1.selected_field.x, state.player1.selected_field.y)
+            |> update_field(state.board.field, x, y)
+
+    state
+      |> set_selected_field(:white, 0, 0)
+      |> set_field(field)
+  end
+
+  defp update_field({piece, start_x, start_y}, field, x, y) do
   field
     |> Map.put({x, y}, piece)
     |> Map.put({start_x, start_y}, nil)
+  end
+
+  defp set_field(state, field) do
+    board = %{state.board | field: field}
+    %{state | board: board}
+  end
+
+  defp set_selected_field(state, player, x, y) do
+    case player do
+      :white ->
+        player1 = %{state.player1 | selected_field: %{:x => x, :y => y}}
+        %{state | player1: player1}
+      :black ->
+        player2 = %{state.player2 | selected_field: %{:x => x, :y => y}}
+        %{state | player1: player2}
+    end
+  end
+
+  defp return_state(state) do
+    {:reply, state, state}
   end
 end

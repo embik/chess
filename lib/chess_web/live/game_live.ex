@@ -1,4 +1,6 @@
 defmodule ChessWeb.GameLive do
+  alias ChessWeb.Router.Helpers, as: Routes
+
   use Phoenix.LiveView
 
   def render(assigns) do
@@ -6,9 +8,16 @@ defmodule ChessWeb.GameLive do
   end
 
   def mount(%{"id" => id}, _, socket) do
-    {_, pid} = Chess.GameRegistry.lookup(id)
-    state = Chess.Game.Server.get_state(pid)
-    {:ok, assign(socket, pid: pid, game: state)}
+    case Chess.GameRegistry.lookup(id) do
+      {:ok, pid} ->
+        state = Chess.Game.Server.get_state(pid)
+        {:ok, assign(socket, pid: pid, game: state)}
+      :error ->
+        {:ok,
+          socket
+          |> redirect(to: Routes.page_path(socket, :index))
+        }
+    end
   end
 
   def handle_event("select_piece", %{"x" => x, "y" => y}, %{assigns: assigns} = socket) do

@@ -96,6 +96,7 @@ defmodule Chess.Game.Server do
 
     state
       |> set_selected_field(:white, 0, 0)
+      |> Map.update(:round, 0, fn x -> x + 1 end)
       |> set_field(field)
   end
 

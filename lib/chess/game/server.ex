@@ -60,7 +60,20 @@ defmodule Chess.Game.Server do
             {:reply, state, state}
         end
       false ->
-        {:reply, state, state}
+        case state.player1.selected_field.x == 0 and state.player1.selected_field.y == 0 do
+          true ->
+            # selecting a non-valid field, do nothing
+            {:reply, state, state}
+          false ->
+            # player is making a move
+            field = get_piece(state.board.field, state.player1.selected_field.x, state.player1.selected_field.y)
+                    |> move_piece(state.board.field, x, y)
+
+            player1 = %{state.player1 | selected_field: %{:x => 0, :y => 0}}
+            board = %{state.board | field: field}
+            state = %{state | board: board, player1: player1}
+            {:reply, state, state}
+        end
     end
   end
 
@@ -70,5 +83,19 @@ defmodule Chess.Game.Server do
       nil -> false
       _ -> player.color == piece.color
     end
+  end
+
+  defp get_piece(field, x, y) do
+    piece = Map.get(field, {x, y})
+    case piece do
+      nil -> raise "no piece at " <> x <> "/" <> y
+      _ -> {piece, x, y}
+    end
+  end
+
+  defp move_piece({piece, start_x, start_y}, field, x, y) do
+  field
+    |> Map.put({x, y}, piece)
+    |> Map.put({start_x, start_y}, nil)
   end
 end

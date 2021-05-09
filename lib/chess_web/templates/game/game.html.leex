@@ -5,23 +5,23 @@ Round: <%= @game.round %>
 <table class="chess-board">
   <thead>
     <th></th>
-  <%= for y <- 1..8 do %>
-    <th><%= char(y) %></th>
+  <%= for x <- 1..8 do %>
+    <th><%= char(x) %></th>
   <% end %>
   </thead>
-  <%= for x <- 8..1 do %>
+  <%= for y <- 8..1 do %>
     <tr>
-      <th><%= x %></th>
-      <%= for y <- 1..8 do %>
+      <th><%= y %></th>
+      <%= for x <- 1..8 do %>
         <td phx-click="select_piece" phx-value-x="<%= x %>" phx-value-y="<%= y %>" class="<%= color(x, y) %> <%= is_selected?(@game.player1, x, y) %> pointer"><i class="fas <%= get_piece(@game.board.field, x, y) %>"></i></td>
       <% end %>
-      <th><%= x %></th>
+      <th><%= y %></th>
     </tr>
   <% end %>
   <thead>
     <th></th>
-  <%= for y <- 1..8 do %>
-    <th><%= char(y) %></th>
+  <%= for x <- 1..8 do %>
+    <th><%= char(x) %></th>
   <% end %>
   </thead>
 </table>

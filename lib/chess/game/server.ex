@@ -1,5 +1,6 @@
 defmodule Chess.Game.Server do
   alias Chess.Game
+  alias Chess.Piece.Move
 
   use GenServer
 
@@ -68,7 +69,7 @@ defmodule Chess.Game.Server do
           false ->
             # player is making a move
             state
-            |> move_piece(x, y)
+            |> try_move_piece(x, y)
             |> return_state
         end
     end
@@ -90,8 +91,9 @@ defmodule Chess.Game.Server do
     end
   end
 
-  defp move_piece(state, x, y) do
+  defp try_move_piece(state, x, y) do
     field = get_piece(state.board.field, state.player1.selected_field.x, state.player1.selected_field.y)
+            |> check_valid_move(state.board.field, x, y)
             |> update_field(state.board.field, x, y)
 
     state
@@ -100,10 +102,22 @@ defmodule Chess.Game.Server do
       |> set_field(field)
   end
 
+  defp update_field(nil, field, _, _), do: field
   defp update_field({piece, start_x, start_y}, field, x, y) do
-  field
-    |> Map.put({x, y}, piece)
-    |> Map.put({start_x, start_y}, nil)
+    case piece do
+      nil -> field
+      _ ->
+        field
+          |> Map.put({x, y}, piece)
+          |> Map.put({start_x, start_y}, nil)
+    end
+  end
+
+  defp check_valid_move({piece, start_x, start_y}, field, x, y) do
+    case Move.is_valid_move?(piece, field, {start_x, start_y}, {x, y}) do
+      true -> {piece, start_x, start_y}
+      false -> nil
+    end
   end
 
   defp set_field(state, field) do
